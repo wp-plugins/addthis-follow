@@ -1,4 +1,4 @@
-=== AddThis === 
+=== AddThis Follow === 
 Contributors: _mjk_, jorbin, addthis_paul
 Tags: follow, addthis, social,  widget, AddThis 
 Requires at least: 3.3.2

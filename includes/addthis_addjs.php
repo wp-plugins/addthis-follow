@@ -13,8 +13,8 @@ Class AddThis_addjs{
     private $_atPlugins = array(
         'AddThis Social Bookmarking Widget' => array('http://wordpress.org/extend/plugins/addthis/', 'Share') ,
         'AddThis Follow Widget' => array('http://wordpress.org/extend/plugins/addthis-follow/', 'Follow'),
-        'AddThis Trending Content Widget' => array('http://wordpress.org/extend/plugins/addthis-trending', 'Trending' ),
-        'AddThis Welcome Bar' => array('http://wordpress.org/extend/plugins/addthis-welcome/', 'Welcome'), 
+//        'AddThis Trending Content Widget' => array('http://wordpress.org/extend/plugins/addthis-trending', 'Trending' ),
+//        'AddThis Welcome Bar' => array('http://wordpress.org/extend/plugins/addthis-welcome/', 'Welcome'), 
     );
     private $_atInstalled = array();
 

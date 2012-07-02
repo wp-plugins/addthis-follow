@@ -1,5 +1,5 @@
 === AddThis Follow === 
-Contributors: _mjk_, jorbin, addthis_paul
+Contributors: _mjk_, jorbin, addthis_paul, joesullivan
 Tags: follow, addthis, social,  widget, AddThis 
 Requires at least: 3.3.2
 Tested up to: 3.4.1

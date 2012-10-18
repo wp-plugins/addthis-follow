@@ -23,7 +23,7 @@
 * Plugin Name: AddThis Follow Widget
 * Plugin URI: http://www.addthis.com
 * Description: Generate followers for your social networks and track what pages are generating the most followers 
-* Version: 1.0.0
+* Version: 1.1
 *
 * Author: The AddThis Team
 * Author URI: http://www.addthis.com/blog
@@ -81,7 +81,7 @@ class AddThisFollowSidebarWidget extends WP_Widget {
         $control_ops = array( 'width' => 490);
 
         /* Create the widget. */
-        $this->WP_Widget( 'addthis-follow-widget', 'AddThis Follow Widget', $widget_ops, $control_ops );
+        $this->WP_Widget( 'addthis-follow-widget', 'AddThis Follow', $widget_ops, $control_ops );
     
         $this->buttons = array(
         'facebook' => array(
@@ -229,20 +229,32 @@ class AddThisFollowSidebarWidget extends WP_Widget {
         $profile = $addthis_addjs->getProfileID();
         
         echo $addthis_addjs->getAtPluginPromoText();
-
-        echo '<p><label for="'.$this->get_field_id('title') .'">' . __('Title:') . '<input class="widefat" id="'.$this->get_field_id('title').'" name="'. $this->get_field_name('title') .'" type="text" value="'.$title .'" /></label></p>';
-
-        echo '<p><label for="'. $this->get_field_id('profile') .'">'.__('Profile ID (shared accross all AddThis plugins):', 'addthis') .'</label><input class="widefat" id="'. $this->get_field_id('profile') .'" name="'.$this->get_field_name('profile') .'" type="text" value="'. $profile .'"</p>';
-    
-        // Style box
-        echo '<p><label for="'. $this->get_field_id('style') . '">' . __('Style:', 'addthis') . '<br /><select id="toolbox-style" name="'.  $this->get_field_name('style') .'">';
-        foreach($this->styles as $c => $n) {
-            $selected = ($instance['style'] == $c) ? ' selected="selected" ' : '';
-            echo '<option '.$selected.'value="'. $c . '">'.$n[0].'</option>';
-        }
-        echo '</select>';
-
-        echo "<h4>Buttons</h4>";
+        echo '
+                <table width="100%" class="follow-table">
+                    <tr>
+                        <td style="width:290px">
+                            <p><strong><label for="'. $this->get_field_id('style') . '">' . __('Styles:', 'addthis') .'</label></strong></p>
+                            <select id="toolbox-style" name="'.  $this->get_field_name('style') .'">';
+                            foreach($this->styles as $c => $n) {
+                                $selected = ($instance['style'] == $c) ? ' selected="selected" ' : '';
+                                echo '<option '.$selected.'value="'. $c . '">'.$n[0].'</option>';
+                            }
+                            echo '</select>
+                        </td>
+                        <td style="float:right">
+                            <p><strong><label for="'. $this->get_field_id('profile') .'">'.__('AddThis Profile ID:', 'addthis') .'</label></strong></p>
+                                <input style="width:160px" class="widefat" id="'. $this->get_field_id('profile') .'" name="'.$this->get_field_name('profile') .'" type="text" value="'. $profile .'" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                        <p><strong><label for="'.$this->get_field_id('title') .'">' . __('Header:') . '</label></strong></p>
+                        <input style="width:160px" class="widefat" id="'.$this->get_field_id('title').'" name="'. $this->get_field_name('title') .'" type="text" value="'.$title .'" />
+                            </td>
+                            </tr>
+                    <tr>
+     <td colspan="2">
+        <p><strong>' . __('Buttons:') . '</strong></p>';
         $count = 0;
         // Buttons
         foreach($this->buttons as $id => $button) {
@@ -251,9 +263,10 @@ class AddThisFollowSidebarWidget extends WP_Widget {
             echo '<p class="atfollowservice '.$class.'" ><img src="http://cache.addthiscdn.com/icons/v1/thumbs/'.$id.'.gif" /><label for="'. $this->get_field_id($id) .'">' . __( $button['name'], 'addthis') .'<span class="atinput">'. sprintf($button['input'] , '<input class="" id="'. $this->get_field_id($id) .'" name="'.$this->get_field_name($id) .'" type="text" value="'. $value .'">' ) .'</span></label></p>';
             $count++;
         }
-        echo "<a href='#' class='atmorelink button-secondary'><span class='atmore'>" . __('More Options', 'addthis') . '</span><span class="atless hidden">'. __('Less Options', 'addthis'). "<span></a>";
-
-
+        echo '</td></tr>
+            <tr><td colspan="2">';
+       echo "<a href='#' class='atmorelink button-secondary'><span class='atmore'>" . __('More Options', 'addthis') . '</span><span class="atless hidden">'. __('Less Options', 'addthis'). "<span></a>
+                </td></tr></table>";
     }
 
 }

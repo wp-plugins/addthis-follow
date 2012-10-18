@@ -6,6 +6,7 @@
 .widget .widget-inside .atfollowservice{
     border-top: 1px solid #ddd;
     padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .widget .widget-inside .atfollowservice img{
@@ -18,4 +19,11 @@
 .addthis_more_promo {
     padding: 15px;
     background: #FCF8E3;
+}
+.follow-table td {
+    padding-top:10px;
+}
+.widget .widget-inside p {
+    margin: 0 0 0.4em;
+    padding: 0;
 }

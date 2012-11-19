@@ -1,7 +1,7 @@
 === AddThis Follow === 
 Contributors: srijith.v, solchea, _mjk_, jorbin, addthis_paul, joesullivan
 Tags: follow, addthis, social,  widget, AddThis 
-Requires at least: 3.3.2
+Requires at least: 2.9
 Tested up to: 3.4.2
 Stable tag: 1.2
 

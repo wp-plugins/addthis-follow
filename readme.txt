@@ -3,7 +3,7 @@ Contributors: srijith.v, solchea, _mjk_, jorbin, addthis_paul, joesullivan
 Tags: follow, addthis, social,  widget, AddThis 
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 1.1
+Stable tag: 1.2
 
 The AddThis Follow Widget enables your visitors to follow, fan, and subscribe to your social profiles, blogs, and RSS feeds.
 
@@ -59,6 +59,10 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 
 
 == Changelog ==
+
+= 1.2 =
+* AddThis Follow configuration options now available in Wordpress Admin Settings
+* Minor bug fixes
 
 = 1.1 =
 * Updated UI on Widget Setup 

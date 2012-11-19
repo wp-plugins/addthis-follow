@@ -38,7 +38,7 @@ Class AddThis_addjs{
             _doing_it_wrong( 'addthis_addjs', 'Only one instance of this class should be initialized.  Look for the $addthis_addjs global first',1 ); 
         }
 
-        $this->productCode = 'wppf-110';
+        $this->productCode = 'wppf-120';
 
         // Version of AddThis code to use
         $this->atversion = '300';

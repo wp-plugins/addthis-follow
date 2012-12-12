@@ -58,6 +58,12 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 
 
 
+== Screenshots ==
+
+1. Defining social accounts
+2. Independant Widget configuration
+3. Buttons in page
+
 == Changelog ==
 
 = 1.2 =

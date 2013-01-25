@@ -1,16 +1,18 @@
-=== AddThis Follow === 
+=== Follow Buttons by AddThis === 
 Contributors: srijith.v, solchea, _mjk_, jorbin, addthis_paul, joesullivan
 Tags: follow, addthis, social,  widget, AddThis 
 Requires at least: 2.9
 Tested up to: 3.4.2
 Stable tag: 1.2
 
-The AddThis Follow Widget enables your visitors to follow, fan, and subscribe to your social profiles, blogs, and RSS feeds.
+AddThis Follow Buttons help visitors follow your social profiles on Facebook, Twitter, Pinterest, Google+, LinkedIn and other social networks.
 
 == Description ==
 Get more traffic back to your site by installing the AddThis Follow WordPress plugin. With AddThis, your users can follow you on the most popular social networks.  With our Optional analytics, you can discover what content is driving the most followers.
 
 Optionally, sign up for a free AddThis.com account to see how your visitors are sharing your content: which services they're using for sharing, which content is shared the most, and more.
+
+We also have plugins available for <a href='http://wordpress.org/extend/plugins/addthis/'>increasing shares</a>, <a href='http://wordpress.org/extend/plugins/addthis-welcome/'>welcoming users based on social behavior</a>, <a href='http://wordpress.org/extend/plugins/addthis-social-sign-in'>adding social authentication</a> and <a href='http://wordpress.org/extend/plugins/addthis-trending-content/'>showing your trending content</a> to your WordPress blog.
 
 <a href="http://www.addthis.com/blog">AddThis Blog</a> | <a href="http://www.addthis.com/privacy">Privacy Policy</a>
 

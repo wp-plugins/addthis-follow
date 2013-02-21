@@ -1,0 +1,50 @@
+.addthis-title {
+    color: #000;
+    font-size: 36px;
+    padding-left: 3px;
+    font-family: "HelveticaNeueBold","HelveticaNeue-Bold","Helvetica Neue", Helvetica, "open sans",arial,sans-serif;
+    font-weight: normal;
+}
+.addthis-plugin-name {
+    color: gray;
+    font-size: 36px;
+    font-weight: normal;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "open sans",arial,sans-serif;
+}
+p.top-text {
+    padding-top:5px;
+}
+table.follow-container p {
+    margin: 0;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+table.follow-container {
+    /*width: 750px;*/
+}
+#follow-table {
+    background-color: #EEE;
+    border: 1px solid #DDD;
+    padding: 10px;
+    /*border-collapse:collapse;*/
+}
+#follow-table tr.follow-table-row td {
+    border-bottom: 1px solid #DDD;
+}
+
+#follow-table tr td {
+    vertical-align: middle;
+    height:40px;
+    line-height:40px;
+}
+
+#follow-table tr td img {
+vertical-align: middle;
+}
+
+#follow-table tr input.follow-input {
+    width: 300px;
+}
+#follow-table tr.follow-table-row input.follow-input {
+    width: 150px;
+}

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class for managing AddThis script includes across all its plugins.
+ */
 Class AddThis_addjs{
     /**
     * var bool check to see if we have added our JS already.  Ensures that we don't add it twice
@@ -14,7 +17,8 @@ Class AddThis_addjs{
         'AddThis Social Bookmarking Widget' => array('http://wordpress.org/extend/plugins/addthis/', 'Share') ,
         'AddThis Follow Widget' => array('http://wordpress.org/extend/plugins/addthis-follow/', 'Follow'),
 //        'AddThis Trending Content Widget' => array('http://wordpress.org/extend/plugins/addthis-trending', 'Trending' ),
-//        'AddThis Welcome Bar' => array('http://wordpress.org/extend/plugins/addthis-welcome/', 'Welcome'), 
+        'AddThis Welcome Bar' => array('http://wordpress.org/extend/plugins/addthis-welcome/', 'Welcome'),
+    	'AddThis Social Sign In' => array('http://wordpress.org/extend/plugins/addthis-social-sign-in/', 'SSI'),  
     );
     private $_atInstalled = array();
 
@@ -38,18 +42,18 @@ Class AddThis_addjs{
             _doing_it_wrong( 'addthis_addjs', 'Only one instance of this class should be initialized.  Look for the $addthis_addjs global first',1 ); 
         }
 
-        $this->productCode = 'wppf-120';
-
-        // Version of AddThis code to use
-        $this->atversion = '300';
+        $this->productCode = ADDTHIS_FOLLOW_PRODUCT_VERSION;
 
         // We haven't added our JS yet. Or at least better not have.
         $this->_js_added = false;
 
         $this->_options = $options;
-
+        
+        // Version of AddThis code to use
+        $this->atversion = ADDTHIS_FOLLOW_ATVERSION;
+        
         // set the cuid
-        $base = home_url();
+        $base = get_option('home');
         $cuid = hash_hmac('md5', $base, 'addthis'); 
         $this->_cuid = $cuid;
 
@@ -90,7 +94,12 @@ Class AddThis_addjs{
             $this->addWidgetToJs();
             $this->addAfterToJs();
             echo $this->jsToAdd;
+            echo '<style type="text/css">.addthis_toolbox {float:left;width:100%;margin:0 0 15px 0;} .addthis_button_tweet {min-width: 83px;float:left;}</style>';
             $this->_js_added = true;
+            $this->jsToAdd = false;
+        } else {        	
+        	 $this->addAfterToJs();
+        	 echo $this->jsToAdd;
         }
     }
 
@@ -107,6 +116,7 @@ Class AddThis_addjs{
     }
 
     function wrapJs(){
+        $this->jsToAdd .= "var addthis_product = '".$this->productCode."';\n";
         $this->jsToAdd = '<script type="text/javascript">' . $this->jsToAdd . '</script>';
     }
 
@@ -120,7 +130,7 @@ Class AddThis_addjs{
     }
 
     function check_for_footer(){
-        $url = add_query_arg( array( 'attest' => 'true') , home_url() );
+        $url = add_query_arg( array( 'attest' => 'true') , get_option('home'));
         $response = wp_remote_get( $url, array( 'sslverify' => false ) );
         $code = (int) wp_remote_retrieve_response_code( $response );
             if ( $code == 200 ) {
@@ -147,7 +157,12 @@ Class AddThis_addjs{
     }
     
     function addAfterScript($newData){
-        $this->jsAfterAdd .= $newData;
+    	if ( $this->_js_added != true )
+        {
+        	$this->jsAfterAdd .= $newData;
+        } else {
+        	$this->jsAfterAdd = $newData;
+        }
     }
 
     function addWidgetToJs(){
@@ -155,7 +170,7 @@ Class AddThis_addjs{
     }
 
     function addAfterToJs(){
-        if (! empty($this->jsAfterAdd));
+        if (! empty($this->jsAfterAdd))
             $this->jsToAdd .= '<script type="text/javascript">' . $this->jsAfterAdd . '</script>';
     }
 
@@ -228,22 +243,11 @@ Class AddThis_addjs{
                     else if ($i == ($count -2))
                         $string .= ' and ';
                     else if ($i == ($count -1))
-                        $string .= ' plugins available.';
-                    
+                        $string .= ' plugins available.';                    
                 }
-
-
             }
 
             return '<p class="addthis_more_promo">' .$string . '</p>';
-            
-
-
-
-
-
         }
     }
-
 }
-

@@ -24,11 +24,15 @@
  * Plugin Name: AddThis Follow Widget
  * Plugin URI: http://www.addthis.com
  * Description: Generate followers for your social networks and track what pages are generating the most followers 
- * Version: 1.2
+ * Version: 1.2.1
  *
  * Author: The AddThis Team
  * Author URI: http://www.addthis.com/blog
  */
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.1');
+define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpf-121');
+define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
+
 class AddThisFollowWidget {
 
     function __construct() {
@@ -46,7 +50,7 @@ class AddThisFollowWidget {
         wp_enqueue_style('addthis_follow', $style_location, array(), 0);
         wp_enqueue_script('addthis_follow', $js_location, array('jquery'), 0);
     }
-
+    
 }
 
 new AddThisFollowWidget();
@@ -374,13 +378,16 @@ class AddThisFollowSidebarWidget extends WP_Widget {
 
         /* Create the widget. */
         $this->WP_Widget('addthis-follow-widget', 'AddThis Follow', $widget_ops, $control_ops);
+        
     }
 
     /**
      * Echo's out the content of our widget
      */
     function widget($args, $instance) {
-        extract($args);
+    	if (!empty($args)) {
+	        extract($args);
+	   	}
 
         $title = apply_filters('widget_title', $instance['title']);
 
@@ -413,21 +420,26 @@ class AddThisFollowSidebarWidget extends WP_Widget {
     function update($new_instance, $old_instance) {
         $instance = array();
         $styles = FollowOptions::getInstance()->getStyles();
+        $options = get_option('addthis_settings');
         global $addthis_addjs;
         if (isset($new_instance['profile']) && substr($new_instance['profile'], 0, 2) != 'wp-') {
-            $addthis_addjs->setProfileId($new_instance['profile']);
+        	if (strcmp($new_instance['profile'], $options['profile']) != 0) {
+        		$addthis_addjs->setProfileId($new_instance['profile']);
+        	}
         }
-
+		
         foreach (FollowOptions::getInstance()->getButtonOptions() as $id => $button) {
             if (isset($new_instance[$id]))
                 $instance[$id] = sanitize_text_field($new_instance[$id]);
         }
+        
         $style = $new_instance['style'];
         if (isset($styles[$style])) {
             $instance['style'] = $style;
         } else {
             $instance['style'] = isset($styles[$style]);
         }
+        
         $instance['title'] = sanitize_text_field($new_instance['title']);
 
         return $instance;
@@ -508,4 +520,12 @@ function addthis_follow_early() {
         require('includes/addthis_addjs_extender.php');
         $addthis_addjs = new AddThis_addjs_extender($addthis_options);
     }
+}
+
+//Short code
+function addthis_follow() {
+	$options = get_option('addthis_follow_settings');
+	$addthis_follow = new AddThisFollowSidebarWidget();
+	echo $addthis_follow->widget('', $options);
+	
 }

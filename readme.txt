@@ -1,5 +1,5 @@
 === Follow Buttons by AddThis === 
-Contributors: srijith.v, solchea, _mjk_, jorbin, addthis_paul, joesullivan
+Contributors: srijith.v, solchea, _mjk_, addthis_paul
 Tags: follow, addthis, social,  widget, AddThis 
 Requires at least: 2.9
 Tested up to: 3.4.2

@@ -77,7 +77,6 @@ Class AddThis_addjs_extender extends AddThis_addjs{
             $this->addWidgetToJs();
             $this->addAfterToJs();
             echo $this->jsToAdd;
-            echo '<style type="text/css">.addthis_toolbox {float:left;width:100%;margin:0 0 15px 0;} .addthis_button_tweet {min-width: 83px;float:left;}</style>';
             $this->_js_added = true;
         }
     }

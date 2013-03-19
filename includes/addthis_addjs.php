@@ -94,7 +94,6 @@ Class AddThis_addjs{
             $this->addWidgetToJs();
             $this->addAfterToJs();
             echo $this->jsToAdd;
-            echo '<style type="text/css">.addthis_toolbox {float:left;width:100%;margin:0 0 15px 0;} .addthis_button_tweet {min-width: 83px;float:left;}</style>';
             $this->_js_added = true;
             $this->jsToAdd = false;
         } else {        	
@@ -130,7 +129,7 @@ Class AddThis_addjs{
     }
 
     function check_for_footer(){
-        $url = add_query_arg( array( 'attest' => 'true') , get_option('home'));
+        $url = home_url();
         $response = wp_remote_get( $url, array( 'sslverify' => false ) );
         $code = (int) wp_remote_retrieve_response_code( $response );
             if ( $code == 200 ) {
@@ -141,10 +140,7 @@ Class AddThis_addjs{
     }
     
     function maybe_add_footer_comment(){
-        if ( $_GET['attest'] = 'true' )
-        {
-            add_action( 'wp_footer', array($this, 'test_footer' ), 99999 ); // Some obscene priority, make sure we run last
-        }
+        add_action( 'wp_footer', array($this, 'test_footer' ), 99999 ); // Some obscene priority, make sure we run last
     }
 
     function test_footer(){

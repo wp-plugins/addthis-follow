@@ -88,6 +88,11 @@ class FollowOptions {
                 'input' => 'http://www.linkedin.com/in/ %s',
                 'placeholder' => ''
             ),
+            'linkedin-company' => array(
+                'name' => 'LinkedIn',
+                'input' => 'http://www.linkedin.com/company/ %s',
+                'placeholder' => ''
+            ),
             'google' => array(
                 'name' => 'Google+',
                 'input' => 'https://plus.google.com/ %s',
@@ -324,13 +329,19 @@ class AddThisFollowPlugin {
            $count = 0;
 
            foreach ($buttonOptions as $id => $button) {
-               $rowClass = '';
+           	   if ($id == "linkedin-company") {
+	           			$source = "http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif";
+	           	}
+	           	else {
+	           		$source = "http://cache.addthiscdn.com/icons/v1/thumbs/$id.gif";
+	           	}
+           	   $rowClass = '';
                if (++$count < $buttonCount) {
                    $rowClass = ' class="follow-table-row"';
                }
                echo '<tr' . $rowClass . '>
            <td>
-               <img src="http://cache.addthiscdn.com/icons/v1/thumbs/' . $id . '.gif" />
+               <img src="'.$source.'" />
                <strong><label for="' . $id . '">' . __($button['name'], 'addthis') . '</label></strong>
            </td>
            <td style="text-align:right">
@@ -404,7 +415,12 @@ class AddThisFollowSidebarWidget extends WP_Widget {
 
         foreach (FollowOptions::getInstance()->getButtonOptions() as $id => $button) {
             if (isset($instance[$id]) && !(empty($instance[$id])) && ( $id == 'rss' || $instance[$id] != $button['placeholder'] )) {
-                echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_' . $id . '_follow"></a>';
+            	if ($id == "linkedin-company") {
+        			echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_linkedin_follow" addthis:usertype="company"></a>';
+        		}
+        		else {
+                	echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_' . $id . '_follow"></a>';
+        		}
             }
         }
 
@@ -496,7 +512,13 @@ class AddThisFollowSidebarWidget extends WP_Widget {
         foreach ($buttonOptions as $id => $button) {
             $class = ($count >= 4) ? 'atmore hidden' : '';
             $value = empty($instance) ? $button['placeholder'] : esc_attr($instance[$id]);
-            echo '<p class="atfollowservice ' . $class . '" ><img src="http://cache.addthiscdn.com/icons/v1/thumbs/' . $id . '.gif" /><label for="' . $this->get_field_id($id) . '">' . __($button['name'], 'addthis') . '<span class="atinput">' . sprintf($button['input'], '<input class="" id="' . $this->get_field_id($id) . '" name="' . $this->get_field_name($id) . '" type="text" value="' . $value . '">') . '</span></label></p>';
+        	if ($id == "linkedin-company") {
+	        	$source = "http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif";
+	        }
+	        else {
+	        	$source = "http://cache.addthiscdn.com/icons/v1/thumbs/$id.gif";
+	        }
+            echo '<p class="atfollowservice ' . $class . '" ><img src="'.$source.'" /><label for="' . $this->get_field_id($id) . '">' . __($button['name'], 'addthis') . '<span class="atinput">' . sprintf($button['input'], '<input class="" id="' . $this->get_field_id($id) . '" name="' . $this->get_field_name($id) . '" type="text" value="' . $value . '">') . '</span></label></p>';
             $count++;
         }
         echo '</td></tr>

@@ -24,13 +24,13 @@
  * Plugin Name: AddThis Follow Widget
  * Plugin URI: http://www.addthis.com
  * Description: Generate followers for your social networks and track what pages are generating the most followers 
- * Version: 1.2.1
+ * Version: 1.2.2
  *
  * Author: The AddThis Team
  * Author URI: http://www.addthis.com/blog
  */
-define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.1');
-define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpf-121');
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.2');
+define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpf-122');
 define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
 
 class AddThisFollowWidget {

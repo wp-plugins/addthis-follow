@@ -2,8 +2,8 @@
 Contributors: srijith.v, solchea, _mjk_, addthis_paul
 Tags: follow, addthis, social,  widget, AddThis 
 Requires at least: 2.9
-Tested up to: 3.5.1
-Stable tag: 1.2.2
+Tested up to: 3.7.1
+Stable tag: 1.2.3
 
 AddThis Follow Buttons help visitors follow your social profiles on Facebook, Twitter, Pinterest, Google+, LinkedIn and other social networks.
 
@@ -69,6 +69,9 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 
 == Changelog ==
 
+= 1.2.3 =
+* Better compatibility with other AddThis plugins.
+
 = 1.2.2 =
 * Support for Linkedin Company profiles
 * Minor bug fixes
@@ -89,14 +92,17 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 
 == Upgrade Notice ==
 
+= 1.2.3 =
+Better compatibility with other AddThis plugins.
+
 = 1.2.2 =
-* Linkedin Company profile support, Bug fixes
+Linkedin Company profile support, Bug fixes
 
 = 1.2.1 =
-* Bug fixes
+Bug fixes
 
 = 1.1 = 
-* Updated UI on widget setup and widget framework
+Updated UI on widget setup and widget framework
  
 = 1.0.0 =
-* If you're upgrading to this, you are super special
+If you're upgrading to this, you are super special

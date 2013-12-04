@@ -98,7 +98,8 @@ Class AddThis_addjs{
             $this->jsToAdd = false;
         } else {        	
         	 $this->addAfterToJs();
-        	 echo $this->jsToAdd;
+             echo $this->jsToAdd;
+             $this->jsToAdd = false;
         }
     }
 
@@ -166,8 +167,11 @@ Class AddThis_addjs{
     }
 
     function addAfterToJs(){
-        if (! empty($this->jsAfterAdd))
+        if (! empty($this->jsAfterAdd)) {
+
             $this->jsToAdd .= '<script type="text/javascript">' . $this->jsAfterAdd . '</script>';
+            $this->jsAfterAdd = NULL;
+        }
     }
 
 

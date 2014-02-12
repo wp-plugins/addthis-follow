@@ -29,7 +29,7 @@
  * Author: The AddThis Team
  * Author URI: http://www.addthis.com/blog
  */
-define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.3');
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.4');
 define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpp');
 define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
 

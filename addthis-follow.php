@@ -24,13 +24,13 @@
  * Plugin Name: AddThis Follow Widget
  * Plugin URI: http://www.addthis.com
  * Description: Generate followers for your social networks and track what pages are generating the most followers 
- * Version: 1.2.1
+ * Version: 1.2.4
  *
  * Author: The AddThis Team
  * Author URI: http://www.addthis.com/blog
  */
-define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.1');
-define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpf-121');
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.4');
+define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpp');
 define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
 
 class AddThisFollowWidget {
@@ -287,7 +287,16 @@ class AddThisFollowPlugin {
     function displayOptionsForm($buttonOptions, $style, $title) {
         global $addthis_addjs;
         ?>
-        <p class="top-text"><?php echo $addthis_addjs->getAtPluginPromoText(); ?></p>
+        <?php if(!is_follow_pro_user()) { ?>
+        <div class="updated addthis_setup_nag">
+            <p>AddThis Pro now available - start your trial at 
+                <a href="http://www.addthis.com" target="_blank">www.addthis.com</a> 
+                and get premium widgets, personalized content recommendations, 
+                advanced customization options and priority support.
+            </p>
+        </div><br/>
+        <?php } ?>
+        <?php echo $addthis_addjs->getAtPluginPromoText(); ?>
         <img alt='addthis' src="//cache.addthis.com/icons/v1/thumbs/32x32/more.png" class="header-img"/>
         <span class="addthis-title">AddThis</span> <span class="addthis-plugin-name">Follow</span>
         <form method="post" action="options.php">
@@ -550,4 +559,32 @@ function addthis_follow() {
 	$addthis_follow = new AddThisFollowSidebarWidget();
 	echo $addthis_follow->widget('', $options);
 	
+}
+
+// check for pro user
+function is_follow_pro_user() {
+    $isPro = false;
+    $options = get_option('addthis_settings');
+    $profile = $options['profile'];
+    if ($profile) {
+        $profile_code = str_replace('-', '', $profile);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://q.addthis.com/feeds/1.0/config.json?pubid=" . $profile);
+
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // further processing ....
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        
+        $array = json_decode($server_output);
+        // check for pro user
+        if (array_key_exists('_default',$array)) {
+            $isPro = true;
+        } else {
+            $isPro = false;
+        }
+    }
+    return $isPro;
 }

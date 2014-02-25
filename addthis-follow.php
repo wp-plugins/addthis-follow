@@ -24,12 +24,12 @@
  * Plugin Name: AddThis Follow Widget
  * Plugin URI: http://www.addthis.com
  * Description: Generate followers for your social networks and track what pages are generating the most followers 
- * Version: 1.2.5
+ * Version: 1.2.6
  *
  * Author: The AddThis Team
  * Author URI: http://www.addthis.com/blog
  */
-define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.5');
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.6');
 define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpp');
 define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
 
@@ -567,16 +567,8 @@ function at_follow_is_pro_user() {
     $options = get_option('addthis_settings');
     $profile = $options['profile'];
     if ($profile) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://q.addthis.com/feeds/1.0/config.json?pubid=" . $profile);
-
-        // receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // further processing ....
-        $server_output = curl_exec($ch);
-        curl_close($ch);
-        
+        $request = wp_remote_get( "http://q.addthis.com/feeds/1.0/config.json?pubid=" . $profile );
+        $server_output = wp_remote_retrieve_body( $request );
         $array = json_decode($server_output);
         // check for pro user
         if (array_key_exists('_default',$array)) {

@@ -1,4 +1,4 @@
-=== Follow Buttons by AddThis === 
+=== AddThis Follow Buttons === 
 Contributors: abramsm, srijith.v, jgrodel, bradaddthiscom, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, AddThis_Mike
 Tags: follow, followers, social, widget, AddThis, social tools, website tools, social marketing, personalization tools, Facebook, Twitter, LinkedIn, Google+, YouTube, Flick, Vimeo, Pinterest, Instagram, FourSqaure, Behance, Etsy, Disqus, Tumblr, rss
 Requires at least: 2.9

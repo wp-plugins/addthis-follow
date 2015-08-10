@@ -1,9 +1,9 @@
 === Follow Buttons by AddThis === 
-Contributors: srijith.v, solchea, _mjk_, addthis_paul
-Tags: follow, addthis, social,  widget, AddThis 
+Contributors: abramsm, srijith.v, jgrodel, bradaddthiscom, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, AddThis_Mike
+Tags: follow, followers, social, widget, AddThis, social tools, website tools, social marketing, personalization tools, Facebook, Twitter, LinkedIn, Google+, YouTube, Flick, Vimeo, Pinterest, Instagram, FourSqaure, Behance, Etsy, Disqus, Tumblr, rss
 Requires at least: 2.9
-Tested up to: 3.8.1
-Stable tag: 1.2.6
+Tested up to: 4.3
+Stable tag: 1.2.7
 
 AddThis Follow Buttons help visitors follow your social profiles on Facebook, Twitter, Pinterest, Google+, LinkedIn and other social networks.
 
@@ -69,6 +69,9 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 
 == Changelog ==
 
+= 1.2.7 =
+* Support for WordPress 4.3
+
 = 1.2.6 =
 * Support for servers without CURL
 
@@ -100,6 +103,10 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 * Initial Version
 
 == Upgrade Notice ==
+
+= 1.2.7 =
+* Support for WordPress 4.3
+
 = 1.2.5 =
 Minor bug fix
 

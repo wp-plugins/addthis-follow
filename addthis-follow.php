@@ -24,13 +24,13 @@
  * Plugin Name: AddThis Follow Widget
  * Plugin URI: http://www.addthis.com
  * Description: Generate followers for your social networks and track what pages are generating the most followers 
- * Version: 1.2.6
+ * Version: 1.2.7
  *
  * Author: The AddThis Team
  * Author URI: http://www.addthis.com/blog
  */
-define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.6');
-define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpp');
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.7');
+define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpf');
 define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
 
 class AddThisFollowWidget {
@@ -390,14 +390,14 @@ function initialize_addthis_follow_plugin() {
 
 class AddThisFollowSidebarWidget extends WP_Widget {
 
-    function AddThisFollowSidebarWidget() {
+    function __construct() {
         $widget_ops = array('classname' => 'atfollowwidget', 'description' => 'Connect fans and followers with your profiles on top social services');
 
         /* Widget control settings. */
         $control_ops = array('width' => 490);
 
         /* Create the widget. */
-        $this->WP_Widget('addthis-follow-widget', 'AddThis Follow', $widget_ops, $control_ops);
+        parent::__construct('addthis-follow-widget', 'AddThis Follow', $widget_ops, $control_ops);
         
     }
 

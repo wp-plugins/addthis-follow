@@ -18,12 +18,12 @@ Class AddThis_addjs{
         'AddThis Follow Widget' => array('http://wordpress.org/extend/plugins/addthis-follow/', 'Follow'),
 //        'AddThis Trending Content Widget' => array('http://wordpress.org/extend/plugins/addthis-trending', 'Trending' ),
         'AddThis Welcome Bar' => array('http://wordpress.org/extend/plugins/addthis-welcome/', 'Welcome'),
-    	'AddThis Social Sign In' => array('http://wordpress.org/extend/plugins/addthis-social-sign-in/', 'SSI'),  
+        'AddThis Social Sign In' => array('http://wordpress.org/extend/plugins/addthis-social-sign-in/', 'SSI'),
     );
     private $_atInstalled = array();
 
     var $pubid;
-    
+
     var $jsToAdd;
 
     var $jsAfterAdd;
@@ -39,7 +39,7 @@ Class AddThis_addjs{
     */
     public function __construct ($options){
         if ( did_action('addthis_addjs_created') !== 0){
-            _doing_it_wrong( 'addthis_addjs', 'Only one instance of this class should be initialized.  Look for the $addthis_addjs global first',1 ); 
+            _doing_it_wrong( 'addthis_addjs', 'Only one instance of this class should be initialized.  Look for the $addthis_addjs global first',1 );
         }
 
         $this->productCode = ADDTHIS_FOLLOW_PRODUCT_VERSION;
@@ -48,13 +48,13 @@ Class AddThis_addjs{
         $this->_js_added = false;
 
         $this->_options = $options;
-        
+
         // Version of AddThis code to use
         $this->atversion = ADDTHIS_FOLLOW_ATVERSION;
-        
+
         // set the cuid
         $base = get_option('home');
-        $cuid = hash_hmac('md5', $base, 'addthis'); 
+        $cuid = hash_hmac('md5', $base, 'addthis');
         $this->_cuid = $cuid;
 
         // If the footer option isn't set, check for it
@@ -68,7 +68,7 @@ Class AddThis_addjs{
         // on theme swich, check for footer again
         add_action('switch_theme', array($this, 'switch_theme'),15);
 
-        // In order for our wp_footer magic to work, we need to sometimes add our stuff 
+        // In order for our wp_footer magic to work, we need to sometimes add our stuff
         add_action('init', array($this, 'maybe_add_footer_comment'));
 
 
@@ -84,7 +84,7 @@ Class AddThis_addjs{
     function switch_theme(){
         $footer = $this->check_for_footer();
         $this->_options['wpfooter'] = $footer;
-        update_option( 'addthis_settings', $this->_options); 
+        update_option( 'addthis_settings', $this->_options);
     }
 
     function output_script(){
@@ -96,10 +96,10 @@ Class AddThis_addjs{
             echo $this->jsToAdd;
             $this->_js_added = true;
             $this->jsToAdd = false;
-        } else {        	
-        	 $this->addAfterToJs();
-             echo $this->jsToAdd;
-             $this->jsToAdd = false;
+        } else {
+            $this->addAfterToJs();
+            echo $this->jsToAdd;
+            $this->jsToAdd = false;
         }
     }
 
@@ -116,8 +116,35 @@ Class AddThis_addjs{
     }
 
     function wrapJs(){
-        $this->jsToAdd .= "var addthis_product = '".$this->productCode."';\n";
-        $this->jsToAdd = '<script type="text/javascript">' . $this->jsToAdd . '</script>';
+        $pluginVersion = ADDTHIS_FOLLOW_PLUGIN_VERSION;
+        $wpVersion = get_bloginfo('version');
+        $pco = $this->productCode . '-' . $pluginVersion;
+
+        $pluginInfo = array();
+        $pluginInfo['info_status'] = 'enabled';
+        $pluginInfo['cms_name'] = 'WordPress';
+        $pluginInfo['cms_version'] = $wpVersion;
+        $pluginInfo['plugin_name'] = 'AddThis Follow Buttons';
+        $pluginInfo['plugin_version'] = $pluginVersion;
+        if (current_user_can('install_plugins')) {
+            $pluginInfo['php_version'] = phpversion();
+        }
+
+        $pluginInfoJson = json_encode((object)$pluginInfo);
+
+        $this->jsToAdd .= '
+            if (window.wp_product_version === undefined) {
+                window.wp_product_version = "'.$pco.'";
+            }
+
+            if (window.wp_blog_version === undefined) {
+                window.wp_blog_version = "'.$wpVersion.'";
+            }
+
+            if (window.addthis_plugin_info === undefined) {
+                window.addthis_plugin_info = ' . $pluginInfoJson . ';
+            }
+        ';
     }
 
     /* testing for wp_footer in a theme stuff */
@@ -125,7 +152,7 @@ Class AddThis_addjs{
         $footer = $this->check_for_footer();
         $options = $this->_options;
         $options['wpfooter'] = $footer;
-        update_option( 'addthis_settings', $options); 
+        update_option( 'addthis_settings', $options);
         $this->_options = $options;
     }
 
@@ -134,12 +161,12 @@ Class AddThis_addjs{
         $response = wp_remote_get( $url, array( 'sslverify' => false ) );
         $code = (int) wp_remote_retrieve_response_code( $response );
             if ( $code == 200 ) {
-                $html = preg_replace( '/[   
+                $html = preg_replace( '/[
                 s]/', '', wp_remote_retrieve_body( $response ) );
                 return (bool)( strstr( $html, '<!--wp_footer-->' ) );
             }
     }
-    
+
     function maybe_add_footer_comment(){
         add_action( 'wp_footer', array($this, 'test_footer' ), 99999 ); // Some obscene priority, make sure we run last
     }
@@ -147,22 +174,31 @@ Class AddThis_addjs{
     function test_footer(){
         echo '<!--wp_footer-->';
     }
-    
+
     /* END testing for wp_footer in a theme stuff */
     function addToScript($newData){
         $this->jsToAdd .= $newData;
     }
-    
+
     function addAfterScript($newData){
-    	if ( $this->_js_added != true )
+        if ( $this->_js_added != true )
         {
-        	$this->jsAfterAdd .= $newData;
+            $this->jsAfterAdd .= $newData;
         } else {
-        	$this->jsAfterAdd = $newData;
+            $this->jsAfterAdd = $newData;
         }
     }
 
     function addWidgetToJs(){
+
+        if (strpos($this->jsToAdd, '<script') === false) {
+            $this->jsToAdd = '<script type="text/javascript">' . $this->jsToAdd;
+        }
+
+        if (strpos($this->jsToAdd, '</script>') === false) {
+            $this->jsToAdd .= '</script>';
+        }
+
         $this->jsToAdd .= '<script type="text/javascript" src="//s7.addthis.com/js/'.$this->atversion.'/addthis_widget.js#pubid='. urlencode( $this->pubid ).'"></script>';
     }
 
@@ -182,7 +218,7 @@ Class AddThis_addjs{
     }
     function setUsername($username){
         $this->_options['username'] = sanitize_text_field($username);
-        update_option( 'addthis_settings', $options); 
+        update_option( 'addthis_settings', $options);
     }
 
     function getProfileId(){
@@ -191,8 +227,8 @@ Class AddThis_addjs{
 
     function setProfileId($profile){
         $this->_options['profile'] = sanitize_text_field($profile);
-        update_option( 'addthis_settings', $this->_options); 
-    }   
+        update_option( 'addthis_settings', $this->_options);
+    }
 
     function getPassword(){
         return (isset($this->_options['password']))?  $this->_options['password'] : $this->_cuid;
@@ -200,7 +236,7 @@ Class AddThis_addjs{
 
     function setPassword($password){
         $this->_options['password'] = sanitize_text_field($password);
-        update_option( 'addthis_settings', $options); 
+        update_option( 'addthis_settings', $options);
     }
 
     function getAtPluginPromoText(){
@@ -235,7 +271,7 @@ Class AddThis_addjs{
                 $string .= __( sprintf('<a href="%s" target="_blank">' .$this->_atPlugins[$uninstalled[0]][1] .'</a>', $this->_atPlugins[$uninstalled[0]][0]), 'addthis');
             }  else {
                 $string . __('plugins for ');
-                
+
                 for ($i = 0; $i < $count; $i++) {
                     $string .= __( sprintf('<strong><a href="%s" target="_blank" >' .$this->_atPlugins[$uninstalled[$i]][1] .'</a></strong>', $this->_atPlugins[$uninstalled[$i]][0]), 'addthis');
                     if ($i < ($count - 2))
@@ -243,7 +279,7 @@ Class AddThis_addjs{
                     else if ($i == ($count -2))
                         $string .= ' and ';
                     else if ($i == ($count -1))
-                        $string .= ' plugins available.';                    
+                        $string .= ' plugins available.';
                 }
             }
 

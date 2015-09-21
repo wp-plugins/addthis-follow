@@ -21,15 +21,15 @@
  */
 
 /**
- * Plugin Name: AddThis Follow Widget
+ * Plugin Name: AddThis Follow Buttons
  * Plugin URI: http://www.addthis.com
- * Description: Generate followers for your social networks and track what pages are generating the most followers 
- * Version: 1.2.7
+ * Description: Generate followers for your social networks and track what pages are generating the most followers
+ * Version: 1.3.0
  *
  * Author: The AddThis Team
- * Author URI: http://www.addthis.com/blog
+ * Author URI: http://www.addthis.com/
  */
-define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.2.7');
+define( 'ADDTHIS_FOLLOW_PLUGIN_VERSION' , '1.3.0');
 define( 'ADDTHIS_FOLLOW_PRODUCT_VERSION' , 'wpf');
 define( 'ADDTHIS_FOLLOW_ATVERSION', '300');
 
@@ -50,7 +50,7 @@ class AddThisFollowWidget {
         wp_enqueue_style('addthis_follow', $style_location, array(), 0);
         wp_enqueue_script('addthis_follow', $js_location, array('jquery'), 0);
     }
-    
+
 }
 
 new AddThisFollowWidget();
@@ -101,6 +101,11 @@ class FollowOptions {
             'youtube' => array(
                 'name' => 'YouTube',
                 'input' => 'http://www.youtube.com/user/ %s ',
+                'placeholder' => ''
+            ),
+            'youtube-channel' => array(
+                'name' => 'YouTube',
+                'input' => 'http://youtube.com/channel/ %s ',
                 'placeholder' => ''
             ),
             'flickr' => array(
@@ -169,7 +174,7 @@ class FollowOptions {
 /**
  * Merge the source options with the default button options
  * such that the customizations done on the default options overrides the default options
- * 
+ *
  * @param array $sourceList - List of source options
  * @param array $buttonOptions  - List of attribute of ButtonOptions
  * @param string $title - string
@@ -210,7 +215,7 @@ class AddThisFollowPlugin {
     /**
      * Callback for saving the Follow plugin settings
      * Sanitize the options and save it
-     * 
+     *
      * @param array $input
      * @return array $options
      */
@@ -289,9 +294,9 @@ class AddThisFollowPlugin {
         ?>
         <?php if(!at_follow_is_pro_user()) { ?>
         <div class="updated addthis_setup_nag">
-            <p>AddThis Pro now available - start your trial at 
-                <a href="http://www.addthis.com" target="_blank">www.addthis.com</a> 
-                and get premium widgets, personalized content recommendations, 
+            <p>AddThis Pro now available - start your trial at
+                <a href="http://www.addthis.com" target="_blank">www.addthis.com</a>
+                and get premium widgets, personalized content recommendations,
                 advanced customization options and priority support.
             </p>
         </div><br/>
@@ -338,16 +343,17 @@ class AddThisFollowPlugin {
            $count = 0;
 
            foreach ($buttonOptions as $id => $button) {
-           	   if ($id == "linkedin-company") {
-	           			$source = "http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif";
-	           	}
-	           	else {
-	           		$source = "http://cache.addthiscdn.com/icons/v1/thumbs/$id.gif";
-	           	}
-           	   $rowClass = '';
-               if (++$count < $buttonCount) {
-                   $rowClass = ' class="follow-table-row"';
-               }
+                if ($id == "linkedin-company") {
+                    $source = "http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif";
+                } elseif ($id == "youtube-channel") {
+                    $source = "http://cache.addthiscdn.com/icons/v1/thumbs/youtube.gif";
+                } else {
+                    $source = "http://cache.addthiscdn.com/icons/v1/thumbs/$id.gif";
+                }
+                $rowClass = '';
+                if (++$count < $buttonCount) {
+                    $rowClass = ' class="follow-table-row"';
+                }
                echo '<tr' . $rowClass . '>
            <td>
                <img src="'.$source.'" />
@@ -359,7 +365,7 @@ class AddThisFollowPlugin {
            </tr>';
            }
 
-           echo '</table> 
+           echo '</table>
        </td><td>&nbsp;</td>
        </tr>
        <tr>
@@ -398,16 +404,16 @@ class AddThisFollowSidebarWidget extends WP_Widget {
 
         /* Create the widget. */
         parent::__construct('addthis-follow-widget', 'AddThis Follow', $widget_ops, $control_ops);
-        
+
     }
 
     /**
      * Echo's out the content of our widget
      */
     function widget($args, $instance) {
-    	if (!empty($args)) {
-	        extract($args);
-	   	}
+        if (!empty($args)) {
+            extract($args);
+        }
 
         $title = apply_filters('widget_title', $instance['title']);
 
@@ -424,12 +430,13 @@ class AddThisFollowSidebarWidget extends WP_Widget {
 
         foreach (FollowOptions::getInstance()->getButtonOptions() as $id => $button) {
             if (isset($instance[$id]) && !(empty($instance[$id])) && ( $id == 'rss' || $instance[$id] != $button['placeholder'] )) {
-            	if ($id == "linkedin-company") {
-        			echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_linkedin_follow" addthis:usertype="company"></a>';
-        		}
-        		else {
-                	echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_' . $id . '_follow"></a>';
-        		}
+                if ($id == "linkedin-company") {
+                    echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_linkedin_follow" addthis:usertype="company"></a>';
+                } elseif ($id == "youtube-channel") {
+                    echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_youtube_follow" addthis:usertype="channel"></a>';
+                } else {
+                    echo '<a addthis:userid="' . esc_attr($instance[$id]) . '" class="addthis_button_' . $id . '_follow"></a>';
+                }
             }
         }
 
@@ -448,23 +455,23 @@ class AddThisFollowSidebarWidget extends WP_Widget {
         $options = get_option('addthis_settings');
         global $addthis_addjs;
         if (isset($new_instance['profile']) && substr($new_instance['profile'], 0, 2) != 'wp-') {
-        	if (strcmp($new_instance['profile'], $options['profile']) != 0) {
-        		$addthis_addjs->setProfileId($new_instance['profile']);
-        	}
+            if (strcmp($new_instance['profile'], $options['profile']) != 0) {
+                $addthis_addjs->setProfileId($new_instance['profile']);
+            }
         }
-		
+
         foreach (FollowOptions::getInstance()->getButtonOptions() as $id => $button) {
             if (isset($new_instance[$id]))
                 $instance[$id] = sanitize_text_field($new_instance[$id]);
         }
-        
+
         $style = $new_instance['style'];
         if (isset($styles[$style])) {
             $instance['style'] = $style;
         } else {
             $instance['style'] = isset($styles[$style]);
         }
-        
+
         $instance['title'] = sanitize_text_field($new_instance['title']);
 
         return $instance;
@@ -521,12 +528,13 @@ class AddThisFollowSidebarWidget extends WP_Widget {
         foreach ($buttonOptions as $id => $button) {
             $class = ($count >= 4) ? 'atmore hidden' : '';
             $value = empty($instance) ? $button['placeholder'] : esc_attr($instance[$id]);
-        	if ($id == "linkedin-company") {
-	        	$source = "http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif";
-	        }
-	        else {
-	        	$source = "http://cache.addthiscdn.com/icons/v1/thumbs/$id.gif";
-	        }
+            if ($id == "linkedin-company") {
+                $source = "http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif";
+            } elseif ($id == "youtube-channel") {
+                $source = "http://cache.addthiscdn.com/icons/v1/thumbs/youtube.gif";
+            } else {
+                $source = "http://cache.addthiscdn.com/icons/v1/thumbs/$id.gif";
+            }
             echo '<p class="atfollowservice ' . $class . '" ><img src="'.$source.'" /><label for="' . $this->get_field_id($id) . '">' . __($button['name'], 'addthis') . '<span class="atinput">' . sprintf($button['input'], '<input class="" id="' . $this->get_field_id($id) . '" name="' . $this->get_field_name($id) . '" type="text" value="' . $value . '">') . '</span></label></p>';
             $count++;
         }
@@ -538,7 +546,7 @@ class AddThisFollowSidebarWidget extends WP_Widget {
 
 }
 
-// Setup our shared resources early 
+// Setup our shared resources early
 add_action('init', 'addthis_follow_early', 1);
 
 function addthis_follow_early() {
@@ -555,10 +563,10 @@ function addthis_follow_early() {
 
 //Short code
 function addthis_follow() {
-	$options = get_option('addthis_follow_settings');
-	$addthis_follow = new AddThisFollowSidebarWidget();
-	echo $addthis_follow->widget('', $options);
-	
+    $options = get_option('addthis_follow_settings');
+    $addthis_follow = new AddThisFollowSidebarWidget();
+    echo $addthis_follow->widget('', $options);
+
 }
 
 // check for pro user

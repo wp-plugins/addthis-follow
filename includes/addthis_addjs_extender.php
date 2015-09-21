@@ -36,7 +36,7 @@ Class AddThis_addjs_extender extends AddThis_addjs{
                 $string .= __( sprintf('<a href="%s" target="_blank">' .$this->_atPlugins[$uninstalled[0]][1] .'</a>', $this->_atPlugins[$uninstalled[0]][0]), 'addthis');
             }  else {
                 $string . __('plugins for ');
-                
+
                 for ($i = 0; $i < $count; $i++) {
                     $string .= __( sprintf('<strong><a href="%s" target="_blank" >' .$this->_atPlugins[$uninstalled[$i]][1] .'</a></strong>', $this->_atPlugins[$uninstalled[$i]][0]), 'addthis');
                     if ($i < ($count - 2))
@@ -45,18 +45,13 @@ Class AddThis_addjs_extender extends AddThis_addjs{
                         $string .= ' and ';
                     else if ($i == ($count -1))
                         $string .= ' plugins available.';
-                    
+
                 }
 
 
             }
 
             return '<p class="addthis_more_promo">' .$string . '</p>';
-            
-
-
-
-
 
         }
     }

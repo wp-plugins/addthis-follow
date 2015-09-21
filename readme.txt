@@ -1,14 +1,14 @@
-=== AddThis Follow Buttons === 
+=== AddThis Follow Buttons ===
 Contributors: abramsm, srijith.v, jgrodel, bradaddthiscom, addthis_paul, addthis_matt, ribin_addthis, addthis_elsa, AddThis_Mike
 Tags: follow, followers, social, widget, AddThis, social tools, website tools, social marketing, personalization tools, Facebook, Twitter, LinkedIn, Google+, YouTube, Flick, Vimeo, Pinterest, Instagram, FourSqaure, Behance, Etsy, Disqus, Tumblr, rss
 Requires at least: 2.9
-Tested up to: 4.3
-Stable tag: 1.2.7
+Tested up to: 4.3.1
+Stable tag: 1.3.0
 
 AddThis Follow Buttons help visitors follow your social profiles on Facebook, Twitter, Pinterest, Google+, LinkedIn and other social networks.
 
 == Description ==
-Get more traffic back to your site by installing the AddThis Follow WordPress plugin. With AddThis, your users can follow you on the most popular social networks.  With our Optional analytics, you can discover what content is driving the most followers.
+Get more traffic back to your site by installing the AddThis Follow Buttons WordPress plugin. With AddThis, your users can follow you on the most popular social networks.  With our Optional analytics, you can discover what content is driving the most followers.
 
 Optionally, sign up for a free AddThis.com account to see how your visitors are sharing your content: which services they're using for sharing, which content is shared the most, and more.
 
@@ -16,12 +16,13 @@ We also have plugins available for <a href='http://wordpress.org/extend/plugins/
 
 <a href="http://www.addthis.com/blog">AddThis Blog</a> | <a href="http://www.addthis.com/privacy">Privacy Policy</a>
 
+
 == Installation ==
 
 For an automatic installation through WordPress:
 
 1. Go to the 'Add New' plugins screen in your WordPress admin area
-1. Search for 'AddThis Follow'
+1. Search for 'AddThis Follow Buttons'
 1. Click 'Install Now' and activate the plugin
 
 For a manual installation via FTP:
@@ -46,7 +47,7 @@ No. You only need to create an account if you want to see how your users are sha
 
 = Is JavaScript required? =
 
-All of the options required through this plugin require javascript.   JavaScript must be enabled. We load the actual interface via JavaScript at run-time, which allows us to upgrade the core functionality of the menu itself automatically everywhere. 
+All of the options required through this plugin require javascript.   JavaScript must be enabled. We load the actual interface via JavaScript at run-time, which allows us to upgrade the core functionality of the menu itself automatically everywhere.
 
 = Why use AddThis? =
 1. Ease of use. AddThis is easy to install, customize and localize. We've worked hard to make it the simplest, most recognized sharing tool on the internet.
@@ -59,7 +60,6 @@ All of the options required through this plugin require javascript.   JavaScript
 Over 1,400,000 sites have installed AddThis. With over a billion unique users, AddThis is helping publishers and brands all over the world, in more than sixty languages. You might be surprised who's using AddThis--<a href="http://www.addthis.com/features#partners">here are just a few</a>.
 
 
-
 == Screenshots ==
 
 1. Defining social accounts
@@ -68,6 +68,10 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 
 
 == Changelog ==
+
+= 1.3.0 =
+* YouTube Channel profile support
+* Improved troubleshooting data for AddThis Support
 
 = 1.2.7 =
 * Support for WordPress 4.3
@@ -96,7 +100,7 @@ Over 1,400,000 sites have installed AddThis. With over a billion unique users, A
 * Minor bug fixes
 
 = 1.1 =
-* Updated UI on Widget Setup 
+* Updated UI on Widget Setup
 * Update to Widget Framework
 
 = 1.0.0 =
@@ -122,8 +126,8 @@ Linkedin Company profile support, Bug fixes
 = 1.2.1 =
 Bug fixes
 
-= 1.1 = 
+= 1.1 =
 Updated UI on widget setup and widget framework
- 
+
 = 1.0.0 =
 If you're upgrading to this, you are super special
